@@ -1,7 +1,7 @@
 {
   "config": {
     "run-mode": "docker",
-    "run-exec": "docker compose run php",
+    "run-exec": "docker-compose run --rm -T php",
     "verbosity": "verbose"
   },
   "commit-msg": {

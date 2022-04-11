@@ -31,3 +31,4 @@ _you have a stupid name_
 
 - Get travis to build this and test it
 - Create some common CI examples
+- Make dependabot auto update composer

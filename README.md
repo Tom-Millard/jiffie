@@ -15,11 +15,11 @@ I wanted to use docker and not require the OS to have php or composer and found 
 ## Okay how does it work?
 
 ```bash
-git clone --depth=1 --branch=master [this repo] [your new project name]
+git clone --depth=1 --branch=master git@github.com:Tom-Millard/jiffie.git [your new project name]
 cd [your new project name]
 rm -rf .git
 docker compose build
-docker compose run bash setup
+docker compose run php bash setup
 rm setup
 ```
 

@@ -1,0 +1,8 @@
+parameters:
+
+    paths:
+        - app
+        - tests/Unit
+
+    level: 9
+

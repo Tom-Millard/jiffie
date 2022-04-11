@@ -1,0 +1,101 @@
+{
+  "config": {
+    "run-mode": "docker",
+    "run-exec": "docker exec cqc_php8.1",
+    "verbosity": "verbose"
+  },
+  "commit-msg": {
+    "enabled": true,
+    "actions": [
+      {
+        "action": "\\CaptainHook\\App\\Hook\\Message\\Action\\Beams",
+        "options": {
+          "subjectLength": 50,
+          "bodyLineLength": 72
+        },
+        "conditions": []
+      }
+    ]
+  },
+  "pre-push": {
+    "enabled": false,
+    "actions": []
+  },
+  "pre-commit": {
+    "enabled": true,
+    "actions": [
+      {
+        "action": "\\CaptainHook\\App\\Hook\\PHP\\Action\\Linting",
+        "options": [],
+        "conditions": []
+      },
+      {
+        "action": "php ./vendor/bin/phpstan analyse --memory-limit=2G {$STAGED_FILES|of-type:php}",
+        "options": [],
+        "conditions": [
+          {
+            "exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\OfType",
+            "args": ["php"]
+          }
+        ]
+      },
+      {
+        "action": "php ./vendor/bin/psalm {$STAGED_FILES|of-type:php}",
+        "options": [],
+        "conditions": [
+          {
+            "exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\OfType",
+            "args": ["php"]
+          }
+        ]
+      },
+      {
+        "action": "php ./vendor/bin/phpcbf {$STAGED_FILES|of-type:php}",
+        "options": [],
+        "conditions": [
+          {
+            "exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\OfType",
+            "args": ["php"]
+          }
+        ]
+      }
+    ]
+  },
+  "prepare-commit-msg": {
+    "enabled": false,
+    "actions": []
+  },
+  "post-commit": {
+    "enabled": false,
+    "actions": []
+  },
+  "post-merge": {
+    "enabled": false,
+    "actions": []
+  },
+  "post-checkout": {
+    "enabled": false,
+    "actions": []
+  },
+  "post-rewrite": {
+    "enabled": false,
+    "actions": []
+  },
+  "post-change": {
+    "enabled": true,
+    "actions": [
+      {
+        "action": "composer install",
+        "options": {},
+        "conditions": [
+          {
+            "exec": "\\CaptainHook\\App\\Hook\\Condition\\FileChanged\\Any",
+            "args": [
+              ["composer.json", "composer.lock", "captainhook.json"]
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
